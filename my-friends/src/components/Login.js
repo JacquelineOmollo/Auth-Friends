@@ -2,7 +2,10 @@ import React, { useState } from "react";
 import { axiosWithAuth } from "../utils/axiosWithAuth";
 
 const Login = ({ history }) => {
-  const [user, setPass] = useState({ username: "", password: "" });
+  const [user, setPass] = useState({
+    username: "",
+    password: ""
+  });
 
   const handleChange = event => {
     setPass({ ...user, [event.target.name]: event.target.value });
@@ -11,11 +14,10 @@ const Login = ({ history }) => {
   const handleSubmit = event => {
     event.preventDefault();
     axiosWithAuth()
-      .post("/api/login", user)
+      .post("/login", user)
       .then(response => {
-        console.log(response);
         localStorage.setItem("token", response.data.payload);
-        history.push("/api/friends");
+        history.push("/friends");
       })
       .catch(error => console.log(error.response));
   };
@@ -24,7 +26,7 @@ const Login = ({ history }) => {
       <input
         type="text"
         name="username"
-        onchange={handleChange}
+        onChange={handleChange}
         placeholder="username"
         value={user.username}
       />
@@ -32,7 +34,7 @@ const Login = ({ history }) => {
       <input
         type="password"
         name="password"
-        onchange={handleChange}
+        onChange={handleChange}
         placeholder="password"
         value={user.password}
       />
